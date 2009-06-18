@@ -1,8 +1,23 @@
+/**
+ * Copyright (c) 2009 Sergiy Kovalchuk (serg472@gmail.com)
+ * 
+ * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
+ * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
+ *  
+ * Following code is based on Element.mask() implementation from ExtJS framework (http://extjs.com/)
+ *
+ */
 ;(function($){
 	
+	/**
+	 * Displays loading mask over selected element.
+	 *
+	 * @param label Text message that will be displayed on the top of a mask besides a spinner (optional). 
+	 * 				If not provided only mask will be displayed without a label or a spinner.  	
+	 */
 	$.fn.mask = function(label){
 		
-	    this.unmask();
+		this.unmask();
 		
 		if(this.css("position") == "static") {
 			this.addClass("masked-relative");
@@ -12,6 +27,7 @@
 		
 		var maskDiv = $('<div class="loadmask"></div>');
 		
+		//auto height fix for IE
 		var ua = navigator.userAgent.toLowerCase();
 		var isStrict = document.compatMode == "CSS1Compat";
 		var isIE = ua.indexOf("msie") > -1;
@@ -38,6 +54,9 @@
 		
 	};
 	
+	/**
+	 * Removes mask from the element.
+	 */
 	$.fn.unmask = function(label){
 		this.find(".loadmask-msg,.loadmask").remove();
 		this.removeClass("masked");
