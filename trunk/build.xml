@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="jQuery LoadMask Plugin" default="build.dist" basedir=".">
+
+    <target name="clean" depends="-load.properties">
+        <delete dir="${build.dir}" quiet="true"/>
+    </target>
+
+    <target name="-load.properties">
+        <property file="build.properties"/>
+    </target>
+
+    <target name="-init" depends="-load.properties,clean">
+        <mkdir dir="${build.dir}"/>
+    	<mkdir dir="${build.dir}/${dist.package.name}"/>
+    </target>
+	
+	<target name="js.minify">
+	    <apply executable="java" parallel="false">
+	    	<fileset dir="src" includes="**/*.js"/>
+	        <arg line="-jar"/>
+	        <arg path="lib/yuicompressor-2.4.2.jar"/>
+	        <srcfile/>
+	        <arg line="-o"/>
+	        <mapper type="glob" from="*.js" to="${build.dir}/*.min.js"/>
+	        <targetfile/>
+	    </apply>
+		<concat destfile="${build.dir}/${dist.package.name}/jquery.loadmask.min.js">
+			<fileset dir="." includes="license.txt"/>
+			<fileset dir="${build.dir}" includes="**/*.min.js"/>
+		</concat>
+	</target>
+
+    <target name="build.dist" depends="-init,js.minify">
+        <copy todir="${build.dir}/${dist.package.name}">
+            <fileset dir=".">
+            	<include name="images/**/*"/>
+                <include name="demo/example.html"/>
+            </fileset>
+        	<fileset dir="src" includes="**/*"/>
+        </copy>
+        <zip destfile="${build.dir}/${dist.package.name}.zip"
+             basedir="${build.dir}/${dist.package.name}"
+             includes="**/*"/>
+    </target>
+
+</project>
