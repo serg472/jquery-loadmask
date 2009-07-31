@@ -28,14 +28,9 @@
 		var maskDiv = $('<div class="loadmask"></div>');
 		
 		//auto height fix for IE
-		var ua = navigator.userAgent.toLowerCase();
-		var isStrict = document.compatMode == "CSS1Compat";
-		var isIE = ua.indexOf("msie") > -1;
-		var isIE7 = ua.indexOf("msie 7");
-		
-		if(isIE && !(isIE7 && isStrict) && this.css("height") == "auto"){ 
-			maskDiv.height(this.height());
-			maskDiv.width(this.width());
+		if(navigator.userAgent.toLowerCase().indexOf("msie") > -1){
+			maskDiv.height(this.height() + parseInt(this.css("padding-top")) + parseInt(this.css("padding-bottom")));
+			maskDiv.width(this.width() + parseInt(this.css("padding-left")) + parseInt(this.css("padding-right")));
 		}
 		
 		this.append(maskDiv);
@@ -46,8 +41,8 @@
 			this.append(maskMsgDiv);
 			
 			//calculate center position
-			maskMsgDiv.css("top", Math.round(this.height() / 2 - maskMsgDiv.height() / 2)+"px");
-			maskMsgDiv.css("left", Math.round(this.width() / 2 - maskMsgDiv.width() / 2)+"px");
+			maskMsgDiv.css("top", Math.round(this.height() / 2 - (maskMsgDiv.height() - parseInt(maskMsgDiv.css("padding-top")) - parseInt(maskMsgDiv.css("padding-bottom"))) / 2)+"px");
+			maskMsgDiv.css("left", Math.round(this.width() / 2 - (maskMsgDiv.width() - parseInt(maskMsgDiv.css("padding-left")) - parseInt(maskMsgDiv.css("padding-right"))) / 2)+"px");
 			
 			maskMsgDiv.show();
 		}
