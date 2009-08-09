@@ -35,3 +35,6 @@
 .masked-relative {
     position: relative !important;
 }
+.masked-hidden {
+    visibility: hidden !important;
+}

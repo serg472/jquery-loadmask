@@ -33,6 +33,11 @@
 			maskDiv.width(this.width() + parseInt(this.css("padding-left")) + parseInt(this.css("padding-right")));
 		}
 		
+		//fix for z-index bug with selects in IE6
+		if(navigator.userAgent.toLowerCase().indexOf("msie 6") > -1){
+			this.find("select").addClass("masked-hidden");
+		}
+		
 		this.append(maskDiv);
 		
 		if(typeof label == "string") {
@@ -56,6 +61,7 @@
 		this.find(".loadmask-msg,.loadmask").remove();
 		this.removeClass("masked");
 		this.removeClass("masked-relative");
+		this.find("select").removeClass("masked-hidden");
 	};
  
 })(jQuery);
