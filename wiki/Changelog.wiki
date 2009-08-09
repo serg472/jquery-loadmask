@@ -1,4 +1,7 @@
 #labels Featured
+*0.3*
+  * Fixed z-index bug for select elements in IE6
+
 *0.2*
   * Fixed issues with IE6
 
